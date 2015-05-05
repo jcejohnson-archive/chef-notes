@@ -37,7 +37,7 @@ Download the installer from http://docs.docker.com/installation/windows/. Let it
 	> "c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" --version
 	4.3.26r98988
 
-Launch boot2docker, set the appropriate environment variables and run the hello-world example. You should also be able to do *docker ps*, *docker images* and other docker commands in a cmd window, PowerShell or GitBash.
+Launch boot2docker, set the appropriate environment variables and run the hello-world example. You should also be able to do *docker ps*, *docker images* and other docker commands in a cmd, PowerShell or GitBash window.
 
 I initially installed VirtualBox before installing boot2docker and I had issues with the docker command not talking to the docker daemon. I played some tricks with port forwarding in VirtualBox and it worked but my Test Kitchen attempts failed. I removed VirtualBox and boot2docker then reinstall boot2docker and let it install VirtualBox and now things are working. YMMV 
 
@@ -104,3 +104,15 @@ You can use docker commands to see the images and containers and even launch a s
 		ID_LIKE=debian
 		PRETTY_NAME="Ubuntu precise (12.04.5 LTS)"
 		VERSION_ID="12.04"
+
+
+Continue The Tutorial
+---------------------
+
+At this point you can continue the [Getting Started Guide](http://kitchen.ci/docs/getting-started).
+
+When you get to [Adding a Dependency](http://kitchen.ci/docs/getting-started/adding-dependency), before you *gem install berkshelf*, you will need to add two directories to your PATH. How you do it depends on whether you're using cmd, PowerShell or GitBash. This is how I did it in a cmd window:
+
+```
+PATH=%PATH%;c:\opscode\chefdk\embedded\bin\gem;c:\users\<Username>\.chefdk\gem\ruby\2.1.0\bin
+```
