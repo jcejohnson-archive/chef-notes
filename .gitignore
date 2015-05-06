@@ -1,3 +1,4 @@
 Berksfile.lock
 .kitchen/
 .kitchen.local.yml
+chef-notes.sublime-workspace
