@@ -1,0 +1,31 @@
+---
+driver:
+  name: docker
+  binary: docker
+  socket: tcp://192.168.59.103:2376
+  platform: ubuntu
+  require_chef_omnibus: true
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.6
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+    driver_config:
+      image: tragus/chef-omnibus
+      require_chef_omnibus: false
+
+suites:
+  - name: default
+    run_list:
+      - recipe[git::default]
+    attributes:
+  - name: server
+    run_list:
+      - recipe[git::server]
+    attributes:
+    excludes:
+      - centos-6.6
