@@ -1,7 +1,6 @@
 ---
 driver:
   name: docker
-  image: ubuntu:12.04
   binary: docker
   socket: tcp://192.168.59.103:2376
   platform: ubuntu
@@ -11,9 +10,13 @@ provisioner:
   name: chef_zero
 
 platforms:
+  - name: centos-6.6
   - name: ubuntu-10.04
   - name: ubuntu-12.04
-  - name: centos-6.6
+  - name: ubuntu-14.04
+    driver_config:
+      image: tragus/chef-omnibus
+      require_chef_omnibus: false
 
 suites:
   - name: default
@@ -26,4 +29,3 @@ suites:
     attributes:
     excludes:
       - centos-6.6
-
