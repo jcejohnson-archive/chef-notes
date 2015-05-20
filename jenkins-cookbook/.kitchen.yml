@@ -1,0 +1,45 @@
+---
+driver:
+  name: docker
+  binary: docker
+  require_chef_omnibus: false
+  socket: <%= ENV['DOCKER_HOST'] %>
+
+provisioner:
+  name: nodes
+
+platforms:
+  - name: centos-6.6
+    driver:
+      require_chef_omnibus: true
+  - name: ubuntu-14.04
+    driver:
+      image: tragus/chef-omnibus
+      require_chef_omnibus: false
+suites:
+  - name: master
+    driver:
+      instance_name: jenkins_master 
+      forward: 8080
+    run_list:
+      - recipe[tragus_jenkins::master]
+    attributes:
+      comment: |
+        The kitchen-nodes provisioner will make these master node attributes available to
+        the slave so that search() can find the appropriate master. This lets the testcase
+        work exactly the same as the real-world implementation.
+      jenkins:
+        master:
+          jenkins_args: --prefix=/tk-jenkins
+          prefix: /tk-jenkins
+          public_endpoint: http://master:8080/tk-jenkins
+  - name: slave
+    driver:
+      instance_name: jenkins_slave
+      links: jenkins_master:master
+    run_list:
+      - recipe[tragus_jenkins::slave]
+    attributes:
+      jenkins:
+        slave:
+          search_for_master: run_list:tragus_jenkins??master AND jenkins_master_prefix:/tk-jenkins
