@@ -54,7 +54,7 @@ Before we can dive in and start doing Real Work, we need to make sure that Test 
 Start working through the [Getting Started Guide](http://kitchen.ci/docs/getting-started). When you get to [Creating a Cookbook](http://kitchen.ci/docs/getting-started/creating-cookbook) use the Kitchen::Docker driver instead of Vagrant.
 
 ```
-set PATH=%PATH%;c:\Users\<YourUsername>\.chefdk\gem\ruby\2.1.0\bin
+set PATH=%PATH%;C:\opscode\chefdk\embedded\bin:c:\Users\<YourUsername>\.chefdk\gem\ruby\2.1.0\bin
 set DOCKER_HOST=tcp://192.168.###.###:2376
 set DOCKER_CERT_PATH=C:\Users\<YourUsername>\.boot2docker\certs\boot2docker-vm
 set DOCKER_TLS_VERIFY=1
@@ -139,6 +139,15 @@ Continue the [Getting Started Guide](http://kitchen.ci/docs/getting-started). Wh
 
 ```
 PATH=%PATH%;c:\opscode\chefdk\embedded\bin\gem;c:\Users\<YourUsername>\.chefdk\gem\ruby\2.1.0\bin
+```
+
+### Missing Gems & Such
+
+Depending on your installation, you may have a thing or two missing. This is easily fixed by installing the missing gems.
+
+```
+gem install kitchen-docker
+gem install kitchen-nodes
 ```
 
 Closing Thoughts
