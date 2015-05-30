@@ -7,8 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'runit'
-
 include_recipe 'tragus_jenkins::default'
 
 nodes = search(:node, "#{node['jenkins']['slave']['search_for_master']}")
@@ -18,6 +16,4 @@ node.set['jenkins']['master']['endpoint'] = master['jenkins']['master']['public_
 
 log("Located master public endpoint - #{node['jenkins']['master']['endpoint']}")
 
-jenkins_jnlp_slave 'builder' do
-	
-end
+jenkins_jnlp_slave 'builder'

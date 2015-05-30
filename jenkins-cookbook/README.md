@@ -22,28 +22,23 @@ Kitchen::Nodes
 
 TODO -- Document how this is useful.
 
+Testing
+-------
+
+```
+kitchen destroy
+kitchen verify centos
+kitchen destroy
+kitchen verify ubuntu
+kitchen destroy
+```
+
+runit
+-----
+
+I had issues with runit, maybe because I'm running the tests under Docker. To work around this, I created the runit_helper test fixture. I still get issues on the first attempt to converge the slave but it always works the 2nd time.
+
 Beyond Jenkins
 --------------
 
 Of course, you could apply this same technique to other master/slave or server/client setups. Though I have used Jenkins as my example, the approach will work equally well for any similar application. On the other hand, not all master/slave or server/client application architectures will lend themselves to this. In particular, situations where the slave/client component discovers its master/server rather than being told where to attach (in this case, by Chef), is probably inappropriate.
-
-Ubuntu & Centos
-------
-
-With Ubuntu 14.04:
-
-```
-platforms:
-  - name: ubuntu-14.04
-    driver:
-      image: tragus/chef-omnibus
-      require_chef_omnibus: false
-```
-
-converge failed when trying to start the slave:
-
-```
-/sbin/sv warning: jenkins-slave: unable to open supervise/ok: file does not exist
-```
-
-Since my goal isn't to debug Jenkins slave on Ubuntu in Docker, I took the easy way out and switched to CentOS 6.6.

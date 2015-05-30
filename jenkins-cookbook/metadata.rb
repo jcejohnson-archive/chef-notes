@@ -6,4 +6,4 @@ version          '0.1.0'
 
 
 depends "jenkins", "~> 2.3.0"
-depends "runit", "~> 1.6.0"
+depends "runit", "~> 1.5"

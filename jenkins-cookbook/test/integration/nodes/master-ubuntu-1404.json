@@ -1,0 +1,20 @@
+{
+  "id": "master-ubuntu-1404",
+  "automatic": {
+    "ipaddress": "192.168.59.103",
+    "platform": "ubuntu"
+  },
+  "normal": {
+    "comment": "The kitchen-nodes provisioner will make these master node attributes available to\nthe slave so that search() can find the appropriate master. This lets the testcase\nwork exactly the same as the real-world implementation.\n",
+    "jenkins": {
+      "master": {
+        "jenkins_args": "--prefix=/tk-jenkins",
+        "prefix": "/tk-jenkins",
+        "public_endpoint": "http://master:8080/tk-jenkins"
+      }
+    }
+  },
+  "run_list": [
+    "recipe[tragus_jenkins::master]"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "slave-centos-66",
+  "automatic": {
+    "ipaddress": "192.168.56.101",
+    "platform": "centos"
+  },
+  "normal": {
+    "runit_helper": {
+      "centos": {
+        "start": "/sbin/runsvdir /etc/sv"
+      },
+      "ubuntu": {
+        "start": "/usr/sbin/runsvdir-start"
+      }
+    },
+    "jenkins": {
+      "slave": {
+        "search_for_master": "run_list:tragus_jenkins??master AND jenkins_master_prefix:/tk-jenkins"
+      }
+    }
+  },
+  "run_list": [
+    "recipe[runit_helper::default]",
+    "recipe[tragus_jenkins::slave]"
+  ]
+}
