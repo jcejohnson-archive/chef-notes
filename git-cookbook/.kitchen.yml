@@ -2,7 +2,7 @@
 driver:
   name: docker
   binary: docker
-  socket: tcp://192.168.59.103:2376
+  socket: <%= ENV['DOCKER_HOST'] %>
   require_chef_omnibus: true
 
 provisioner:
