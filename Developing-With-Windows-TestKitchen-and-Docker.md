@@ -41,7 +41,7 @@ Git commit: 9894ae9
 
 Launch boot2docker, set the environment variables it tells you to set and run the hello-world example. You should also be able to do *docker ps*, *docker images* and other docker commands in a cmd, PowerShell or GitBash window.
 
-Note:  I initially installed VirtualBox before installing boot2docker and I had issues with the Windows docker client not talking to the boot2docker docker daemon. I played some tricks with port forwarding in VirtualBox and it worked but my Test Kitchen attempts failed. I removed VirtualBox and boot2docker then reinstall boot2docker and let it install VirtualBox and now things are working. YMMV 
+Note:  I initially installed VirtualBox before installing boot2docker and I had issues with the Windows docker client not talking to the boot2docker docker daemon. I played some tricks with port forwarding in VirtualBox and it worked but my Test Kitchen attempts failed. I removed VirtualBox and boot2docker then reinstall boot2docker and let it install VirtualBox and now things are working. YMMV
 
 
 Using Test Kitchen
@@ -124,13 +124,13 @@ The first time an image is pulled will take a moment or two. After that, provisi
 > docker ps
   ...
 > docker exec -i -t <image-name> /bin/bash
-	root@...:/# cat /etc/os-release
-	NAME="Ubuntu"
-	VERSION="12.04.5 LTS, Precise Pangolin"
-	ID=ubuntu
-	ID_LIKE=debian
-	PRETTY_NAME="Ubuntu precise (12.04.5 LTS)"
-	VERSION_ID="12.04"
+    root@...:/# cat /etc/os-release
+    NAME="Ubuntu"
+    VERSION="12.04.5 LTS, Precise Pangolin"
+    ID=ubuntu
+    ID_LIKE=debian
+    PRETTY_NAME="Ubuntu precise (12.04.5 LTS)"
+    VERSION_ID="12.04"
 ```
 
 ### Continue The Tutorial
