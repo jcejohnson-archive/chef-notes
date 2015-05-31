@@ -36,7 +36,13 @@ kitchen destroy
 runit
 -----
 
-I had issues with runit, maybe because I'm running the tests under Docker. To work around this, I created the runit_helper test fixture. I still get issues on the first attempt to converge the slave but it always works the 2nd time.
+I am having issues with runit when executing my slave-node test case with the Kitchen::Docker driver. On every first convergence of the slave node I get the error:
+```
+warning: /etc/service/jenkins-slave: unable to open supervise/ok: file does not exist
+```
+When I run _kitchen converge_ a second time, there is no error but the Jenkins slave is not running. If I attach to the container and manually start runsvdir the slave is launched successfully.
+
+I created a [test fixture](test/fixtures/cookbooks/runit-helper/recipes/default.rb) to explicitly execute runsvdir. The first converge still fails with the same error but the 2nd converge is successful and the Jenkins slave is executed.
 
 Beyond Jenkins
 --------------
