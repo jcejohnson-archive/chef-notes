@@ -9,7 +9,6 @@ provisioner:
   name: nodes
 
 platforms:
-  - name: centos-6.6
   - name: ubuntu-14.04
 
 suites:
@@ -32,16 +31,14 @@ suites:
   - name: slave
     driver:
       instance_name: jenkins_slave
-      links: jenkins_master:master
+      # links: jenkins_master:master
+      # See README.md for an explanation of binary, dockerfile and run_command.
+      binary: run-docker.sh
+      dockerfile: test/docker/Dockerfile-phusion
+      run_command: //sbin/my_init
     run_list:
-      - recipe[runit_helper::default]
       - recipe[tragus_jenkins::slave]
     attributes:
-      runit_helper:
-        centos:
-          start: /sbin/runsvdir /etc/sv
-        ubuntu:
-          start: /usr/sbin/runsvdir-start
       jenkins:
         slave:
           search_for_master: run_list:tragus_jenkins??master AND jenkins_master_prefix:/tk-jenkins

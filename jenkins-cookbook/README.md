@@ -42,7 +42,17 @@ warning: /etc/service/jenkins-slave: unable to open supervise/ok: file does not 
 ```
 When I run _kitchen converge_ a second time, there is no error but the Jenkins slave is not running. If I attach to the container and manually start runsvdir the slave is launched successfully.
 
-I created a [test fixture](test/fixtures/cookbooks/runit-helper/recipes/default.rb) to explicitly execute runsvdir. The first converge still fails with the same error but the 2nd converge is successful and the Jenkins slave is executed.
+### phusion/dockerimage
+
+I eventually settled on using phusion/dockerimage and a custom [Dockerfile](test/docker/Dockerfile-phusion). This locks me into Ubuntu 14.04 for the slave or requires me to create a phusion-like base image for each platform I want to test.
+
+### [run-docker.sh](run-docker.sh)
+
+The custom Dockerfile uses COPY to inject an [runit entry script to launch sshd](test/docker/tk-sshd.sh) in the way that kitchen-docker wants it to execute. kitchen-docker builds its image using 'docker build -'. Unfortunately, feeding the Dockerfile to 'docker build' on stdin breaks COPY because the working directory is not where you think it is. To handle this, [.kitchen.yml](.kitchen.yml) specifies run-docker.sh as the docker binary. run-docker.sh saves the stdin-provided Dockerfile content into a file and invokes 'docker build -f <filename> .'
+
+### //sbin/my_init
+
+When [testing on Windows](Developing-With-Windows-TestKitchen-and-Docker.md) I ran into one final issue. I need to replace the command kitchen-docker gives to 'docker run' with /sbin/my_init from phusion/dockerimage (this is the bit that makes runit work with Docker). If I specify /sbin/my_init for the run_command in .kitchen.yml, it will be mangled into C:/Program Files (x86)/Git/sbin/my_init when run-docker.sh is invoked by gitbash. The workaround is to add an extra leading slash so that gitbash will leave it alone: 'run_command: //sbin/my_init'
 
 Beyond Jenkins
 --------------

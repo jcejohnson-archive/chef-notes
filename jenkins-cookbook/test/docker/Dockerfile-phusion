@@ -1,0 +1,31 @@
+# This is the Dockerfile content created by kitchen-docker
+#
+# Override kitchen-docker's base image with phusion/baseimage
+# because it has a working runit setup. Its base is ubuntu:14.04.
+#
+FROM phusion/baseimage
+#
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -sf /bin/true /sbin/initctl
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -y sudo openssh-server curl lsb-release
+#
+RUN if ! getent passwd kitchen; then useradd -d /home/kitchen -m -s /bin/bash kitchen; fi
+RUN echo kitchen:kitchen | chpasswd
+RUN echo 'kitchen ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN mkdir -p /etc/sudoers.d
+RUN echo 'kitchen ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/kitchen
+RUN chmod 0440 /etc/sudoers.d/kitchen
+#
+# End of kitchen-docker Dockerfile
+
+# This is added to the kitchen-docker Dockerfile to setup sshd
+# in the way that kitchen-docker wants it to behave.
+
+# Create an sshd service that kitchen-docker wants
+RUN mkdir -p /etc/service/tk-sshd/
+COPY test/docker/tk-sshd.sh /etc/service/tk-sshd/run
+
+# Use phusion's key generation script.
+RUN chmod +x /etc/service/tk-sshd/run && /etc/my_init.d/00_regen_ssh_host_keys.sh -f
