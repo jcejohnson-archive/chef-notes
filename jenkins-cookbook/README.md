@@ -52,7 +52,7 @@ The custom Dockerfile uses COPY to inject an [runit entry script to launch sshd]
 
 ### //sbin/my_init
 
-When [testing on Windows](Developing-With-Windows-TestKitchen-and-Docker.md) I ran into one final issue. I need to replace the command kitchen-docker gives to 'docker run' with /sbin/my_init from phusion/dockerimage (this is the bit that makes runit work with Docker). If I specify /sbin/my_init for the run_command in .kitchen.yml, it will be mangled into C:/Program Files (x86)/Git/sbin/my_init when run-docker.sh is invoked by gitbash. The workaround is to add an extra leading slash so that gitbash will leave it alone: 'run_command: //sbin/my_init'
+When [testing on Windows](../Developing-With-Windows-TestKitchen-and-Docker.md) I ran into one final issue. I need to replace the command kitchen-docker gives to 'docker run' with /sbin/my_init from phusion/dockerimage (this is the bit that makes runit work with Docker). If I specify /sbin/my_init for the run_command in .kitchen.yml, it will be mangled into C:/Program Files (x86)/Git/sbin/my_init when run-docker.sh is invoked by gitbash. The workaround is to add an extra leading slash so that gitbash will leave it alone: 'run_command: //sbin/my_init'
 
 Beyond Jenkins
 --------------
