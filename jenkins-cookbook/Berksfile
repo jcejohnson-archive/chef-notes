@@ -2,6 +2,3 @@ source "https://supermarket.chef.io"
 
 metadata
 
-group :integration do
-  cookbook 'runit_helper', path: 'test/fixtures/cookbooks/runit-helper'
-end
