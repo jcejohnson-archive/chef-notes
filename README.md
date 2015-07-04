@@ -21,3 +21,17 @@ The [git-cookbook](git-cookbook) directory was created by working through the [T
 ## jenkins-cookbook
 
 The [jenkins-cookbook](jenkins-cookbook) directory is a simple example of a master/slave node pair using the kitchen-docker driver. It illustrates an approach for testing multi-node integration with Test Kitchen.
+
+## Vagrant
+
+### ssh into the test node
+
+In most cases you can use _kitchen login_ to login to the test node. If you want to ssh directly for some reason, you will need to find and use the private key that has been created for you:
+
+```
+ssh -i .kitchen/kitchen-vagrant/kitchen-${cookbook_name}-${instance}/.vagrant/machines/default/virtualbox/private_key
+```
+
+where _instance_ is taken from the _Instance_ column of _kitchen list_.
+
+You can also get this path from the _kitchen diagnose ${suite}_ output at the path _instances.instance.state_file.ssh\_key_
